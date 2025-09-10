@@ -3,7 +3,6 @@ import { WalletComponent } from "@/components/WalletComponent";
 import { FitnessHeader } from "@/components/FitnessHeader";
 import { WorkoutLog } from "@/components/WorkoutLog";
 import { AddWorkoutDialog } from "@/components/AddWorkoutDialog";
-import { WorkoutDetailsDialog } from "@/components/WorkoutDetailsDialog";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useSecureStrideLog } from "@/hooks/useContract";
@@ -11,7 +10,6 @@ import { Plus, Target, TrendingUp, Shield } from "lucide-react";
 
 const Index = () => {
   const [showAddWorkout, setShowAddWorkout] = useState(false);
-  const [selectedWorkout, setSelectedWorkout] = useState<number | null>(null);
   const { isConnected } = useSecureStrideLog();
 
   const handleAddWorkout = () => {
@@ -19,10 +17,6 @@ const Index = () => {
       return;
     }
     setShowAddWorkout(true);
-  };
-
-  const handleWorkoutSelect = (workoutId: number) => {
-    setSelectedWorkout(workoutId);
   };
 
   return (
@@ -89,7 +83,7 @@ const Index = () => {
               </Button>
             </div>
             
-            <WorkoutLog onWorkoutSelect={handleWorkoutSelect} />
+            <WorkoutLog />
           </div>
 
           <div className="space-y-6">
@@ -149,12 +143,6 @@ const Index = () => {
       <AddWorkoutDialog
         open={showAddWorkout}
         onOpenChange={setShowAddWorkout}
-      />
-      
-      <WorkoutDetailsDialog
-        workoutId={selectedWorkout}
-        open={selectedWorkout !== null}
-        onOpenChange={(open) => !open && setSelectedWorkout(null)}
       />
     </div>
   );
